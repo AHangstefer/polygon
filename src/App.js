@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
 import axios from 'axios';
 import './App.css';
 
@@ -6,38 +6,77 @@ import './App.css';
 
 function App() {
 
-  const [stock, stockSet] = useState([])
+  let [ticker, setTicker] = useState("")
+  let [date, setDate] = useState("");
+  let [stock, setStock] =useState([])
+  
 
   const key = process.env.REACT_APP_API_KEY
 
-  useEffect(()=> {
-    axios
-    .get(`https://api.polygon.io/v1/open-close/AAPL/2020-10-14?adjusted=true&apiKey=${key}`)
-    .then(res => {
-      console.log("this is res from app.js polygon get", res)
-      stockSet(res.data)
-    })
-    .catch(err => {
-      console.log("Oh no! WHERE'S THE DATA?!", err)
-    })
-  },[])
+  
 
-  let close = stock.close;
-  let open = stock.open;
-  let high = stock.high;
-  let low = stock.low;
+  const fetchPolygonAPI = (async () =>{
+  let response = await fetch(`https://api.polygon.io/v1/open-close/${ticker.toUpperCase()}/${date}?adjusted=true&apiKey=${key}`)
+  response = await response.json()
+  if (response){
+      setStock(response)
+      console.log("this is repsonse", response)
 
-  console.log("close, open, high, low", close, open, high, low)
+  
+  } else {
+    console.log("error with fetch")
+  }
+})
 
+// function handleChange(e){
+  
+//   setTicker(e.target.value)
+//   setDate(e.target.value)
+//   console.log("handlechange is running")
+
+// }
 
 
   return (
     <>
-    <div className="App"> 
-      <p></p>
-    
-    
+    <div className="App"> Find Your Stock
+      <div className = "inputs and button">
+        <input
+          type = "text"
+          value = {ticker}
+          onChange={(e)=> setTicker(e.target.value)}
+          placeholder = "ticker"
+          >
+        </input>
+        <input
+          type="text"
+          value = {date}
+          onChange = {(e)=> (setDate(e.target.value))}
+          placeholder = "YYYY-MM-DD"
+          >
+        </input>
+        <button onClick={fetchPolygonAPI}>Find Stock</button> 
+      </div>
     </div>
+    { stock.symbol ?
+    <div className = "returned Info">
+      
+      <div>Ticker: {stock.symbol}</div>
+      <div>Date Searched: {date}</div>
+      <div>Low: {stock.low}</div>
+      <div>High: {stock.high}</div>
+      <div>Open: {stock.open}</div>
+      <div>Close: {stock.close}</div>
+      <div> Percentage change from open to close: </div>
+      <div> Percentage changed today: </div>
+
+
+
+    </div> : ""}
+    {stock.status ? <div> We can't find this stock on this date. Please check inputs and try again</div> : ""}
+    
+   
+   
     </>
   );
 }
@@ -45,8 +84,7 @@ function App() {
 export default App;
 
 
-// {Object.values(stock).forEach(items=>
-//   Object.values(items).map(item => (
-//     console.log("items", item)
-//     ))
-//    )}
+
+
+
+
