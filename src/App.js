@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import axios from 'axios';
-import './App.css';
+import './styles/App.css';
 
 
 
@@ -54,7 +54,7 @@ function App() {
               type = "text"
               value = {ticker}
               onChange={(e)=> setTicker(e.target.value)}
-              placeholder = "ticker"
+              placeholder = "Ticker"
               >
             </input>
             <input
@@ -64,23 +64,23 @@ function App() {
               placeholder = "YYYY-MM-DD"
               >
             </input>
-            <button onClick={fetchPolygonAPI}>Find Stock</button> 
+            <button onClick={fetchPolygonAPI}>Search</button> 
         </div>  
     </div>
 
     { stock.symbol ?
-      <div className = "returned Info">
-        <div className = "tickerName">Ticker: {stock.symbol}</div>
+      <div className = "returnedInfo">
             <div className = "tickerData" >
-                <div>Date Searched: {stock.from}</div>
-                <div>Low: {stock.low}</div>
-                <div>High: {stock.high}</div>
-                <div>Open: {open}</div>
-                <div>Close: {close}</div>
-                <div> Price change from open to close: {difference}</div>
-                <div> Grapper: {percentChange} % </div>
-                <div>Pre Market: {stock.preMarket}</div>
-                <div>After Hours:{stock.afterHours}</div>
+                <div className = "data">Ticker: {stock.symbol}</div>
+                <div className = "data">Date Searched: {stock.from}</div>
+                <div className = "data">Open: {open}</div>
+                <div className = "data">Close: {close}</div>
+                <div className = "data">High: {stock.high}</div>
+                <div className = "data">Low: {stock.low}</div>
+                <div className = "data"> Price Change: ${difference}</div>
+                <div className = "data"> Grapper: {percentChange} % </div>
+                <div className = "data">Pre Market: {stock.preMarket}</div>
+                <div className = "data">After Hours:{stock.afterHours}</div>
             </div>
       </div> 
     : ""}
