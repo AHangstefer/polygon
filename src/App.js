@@ -46,9 +46,10 @@ function App() {
     <>
     <div className="App"> 
         <div className = "title">Stocks Daily: Open to Close</div>
-        <div className = "intro">Add your ticker and the date using YYYY-MM-DD formate to find your stocks data. The 
+        <div className = "intro">Add your ticker and the date using YYYY-MM-DD format to find your stock's data. The 
           search will return the opening, closing, high, low, pre market, after hours, and price and percentage changes from the date
-          entered. Results are adjusted for splits. </div>
+          entered. Results are adjusted for splits. Price change is indicative of change of price from open to close and gapper
+          is percentage of change from open to close. </div>
         <div className = "inputsButton">
             <input
               type = "text"
@@ -72,7 +73,7 @@ function App() {
       <div className = "returnedInfo">
             <div className = "tickerData" >
                 <div className = "data">TICKER: {stock.symbol}</div>
-                <div className = "data">DATE Searched: {stock.from}</div>
+                <div className = "data">DATE: {stock.from}</div>
                 <div className = "data">OPEN: ${open}</div>
                 <div className = "data">CLOSE: ${close}</div>
                 <div className = "data">HIGH: ${stock.high}</div>
