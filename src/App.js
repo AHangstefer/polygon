@@ -78,7 +78,7 @@ function App() {
                 <div className = "data">HIGH: ${stock.high}</div>
                 <div className = "data">LOW: ${stock.low}</div>
                 {open >= close ? <div className = "dataRED"> PRICE CHANGE: ${difference}</div> : <div className = "dataGREEN"> PRICE CHANGE: ${difference}</div>}
-                {open >= close ? <div className = "dataRED"> GRAPPER: {percentChange} % </div> : <div className = "dataGREEN"> GRAPPER: {percentChange} % </div>}
+                {open >= close ? <div className = "dataRED"> GAPPER: {percentChange} % </div> : <div className = "dataGREEN"> GRAPPER: {percentChange} % </div>}
                 <div className = "data">PRE MARKET: ${stock.preMarket}</div>
                 <div className = "data">AFTER HOURS:${stock.afterHours}</div>
             </div>
