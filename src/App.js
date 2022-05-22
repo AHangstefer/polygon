@@ -1,5 +1,4 @@
 import React, {useState} from "react";
-import axios from 'axios';
 import './styles/App.css';
 
 
@@ -33,13 +32,6 @@ function App() {
   }
 })
 
-// function handleChange(e){
-  
-//   setTicker(e.target.value)
-//   setDate(e.target.value)
-//   console.log("handlechange is running")
-
-// }
 
 
   return (
