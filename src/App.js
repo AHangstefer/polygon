@@ -71,22 +71,22 @@ function App() {
     { stock.symbol ?
       <div className = "returnedInfo">
             <div className = "tickerData" >
-                <div className = "data">Ticker: {stock.symbol}</div>
-                <div className = "data">Date Searched: {stock.from}</div>
-                <div className = "data">Open: {open}</div>
-                <div className = "data">Close: {close}</div>
-                <div className = "data">High: {stock.high}</div>
-                <div className = "data">Low: {stock.low}</div>
-                <div className = "data"> Price Change: ${difference}</div>
-                <div className = "data"> Grapper: {percentChange} % </div>
-                <div className = "data">Pre Market: {stock.preMarket}</div>
-                <div className = "data">After Hours:{stock.afterHours}</div>
+                <div className = "data">TICKER: {stock.symbol}</div>
+                <div className = "data">DATE Searched: {stock.from}</div>
+                <div className = "data">OPEN: ${open}</div>
+                <div className = "data">CLOSE: ${close}</div>
+                <div className = "data">HIGH: ${stock.high}</div>
+                <div className = "data">LOW: ${stock.low}</div>
+                {open >= close ? <div className = "dataRED"> PRICE CHANGE: ${difference}</div> : <div className = "dataGREEN"> PRICE CHANGE: ${difference}</div>}
+                {open >= close ? <div className = "dataRED"> GRAPPER: {percentChange} % </div> : <div className = "dataGREEN"> GRAPPER: {percentChange} % </div>}
+                <div className = "data">PRE MARKET: ${stock.preMarket}</div>
+                <div className = "data">AFTER HOURS:${stock.afterHours}</div>
             </div>
       </div> 
     : ""}
 
     {stock.status === 'NOT_FOUND' ? 
-        <div className = "notfound"> We can't find this stock on this date. Please check inputs and try again</div> 
+        <div className = "notFound"> We can't find this ticker data for this date. Please check inputs and try again.</div> 
     : ""}
     
    </>
