@@ -9,6 +9,7 @@
 
 ## Available Scripts
 
+API key is in .env file. Add your own to run.
 In the project directory = polygon/src
 
 ### `npm start`

@@ -22,11 +22,6 @@ function App() {
   let mydate = new Date(date);
   let dayBefore = Moment(mydate).format("YYYY-MM-DD")
 
-    
-  console.log("this is yeterday for real", dayBefore )
-
-
- 
   const key = process.env.REACT_APP_API_KEY
 
   
