@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import Moment from 'moment';
 import './styles/App.css';
 
 
@@ -8,29 +9,49 @@ function App() {
   let [ticker, setTicker] = useState("")
   let [date, setDate] = useState("");
   let [stock, setStock] =useState([])
+  let [yesterdayStock, setYesterdayStock] = useState([])
+ 
 
   let open = stock.open;
-  let close = stock.close;
-  let difference = (close - open).toFixed(2)
-  let percentChange = ((difference/open) *100).toFixed(2)
-  
+  let yesterdayClose = yesterdayStock.close;
+  let dayDifference = (stock.close - open).toFixed(2);
+  let difference = (open-yesterdayClose).toFixed(2)
+  let percentChange = ((difference/yesterdayClose) *100).toFixed(2)
 
+
+
+  let mydate = new Date(date);
+  let dayBefore = Moment(mydate).format("YYYY-MM-DD")
+
+    
+  console.log("this is yeterday for real", dayBefore )
+
+
+ 
   const key = process.env.REACT_APP_API_KEY
 
   
 
-  const fetchPolygonAPI = (async () =>{
-  let response = await fetch(`https://api.polygon.io/v1/open-close/${ticker.toUpperCase()}/${date}?adjusted=true&apiKey=${key}`)
-  response = await response.json()
-  if (response){
-      setStock(response)
-      console.log("this is repsonse", response)
+    const fetchPolygonAPI =() => {
 
-  
-  } else {
-    console.log("error with fetch")
-  }
-})
+        Promise.all([
+          fetch(`https://api.polygon.io/v1/open-close/${ticker.toUpperCase()}/${dayBefore}?adjusted=true&apiKey=${key}`),
+          fetch(`https://api.polygon.io/v1/open-close/${ticker.toUpperCase()}/${date}?adjusted=true&apiKey=${key}`)
+        ]).then(function (responses) {
+            console.log("this is response", responses)
+            return Promise.all(responses.map(function (response) {
+              return response.json();
+          }));
+        }).then(function (data) {
+          setYesterdayStock(data[0])
+          setStock(data[1])
+          
+        }).catch(function (error) {
+          console.log(error);
+        })
+    };
+
+
 
 
 
@@ -67,11 +88,11 @@ function App() {
                 <div className = "data">TICKER: {stock.symbol}</div>
                 <div className = "data">DATE: {stock.from}</div>
                 <div className = "data">OPEN: ${open}</div>
-                <div className = "data">CLOSE: ${close}</div>
+                <div className = "data">CLOSE: ${stock.close}</div>
                 <div className = "data">HIGH: ${stock.high}</div>
                 <div className = "data">LOW: ${stock.low}</div>
-                {open >= close ? <div className = "dataRED"> PRICE CHANGE: ${difference}</div> : <div className = "dataGREEN"> PRICE CHANGE: ${difference}</div>}
-                {open >= close ? <div className = "dataRED"> GAPPER: {percentChange} % </div> : <div className = "dataGREEN"> GRAPPER: {percentChange} % </div>}
+                {open > stock.close ? <div className = "dataRED"> OPEN-CLOSE PRICE CHANGE: ${dayDifference}</div> : <div className = "dataGREEN"> OPEN-CLOSE PRICE CHANGE: ${dayDifference}</div>}
+                {open >= yesterdayClose ? <div className = "dataGREEN"> MORNING GAPPER: {percentChange} % </div> : <div className = "dataRED"> MORNING GAPPER: {percentChange} % </div>}
                 <div className = "data">PRE MARKET: ${stock.preMarket}</div>
                 <div className = "data">AFTER HOURS:${stock.afterHours}</div>
             </div>
