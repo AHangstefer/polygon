@@ -1,7 +1,11 @@
 
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Updates for Production
+- add verification for user inputs
+- add additional API call to collect Friday closing, so Monday morning gapper can be calculated
+- add additional API calls to collect last open day before Federal Holidays so next morning gapper can be calculated
+- add seperate API call for crypto-currency information 
+- include test suite for making app robust 
 
 ## Available Scripts
 
