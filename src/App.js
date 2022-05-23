@@ -17,8 +17,7 @@ function App() {
   let dayDifference = (stock.close - open).toFixed(2);
   let difference = (open-yesterdayClose).toFixed(2)
   let percentChange = ((difference/yesterdayClose) *100).toFixed(2)
-
-
+  
 
   let mydate = new Date(date);
   let dayBefore = Moment(mydate).format("YYYY-MM-DD")
@@ -60,9 +59,10 @@ function App() {
     <div className="App"> 
         <div className = "title">Stocks Daily: Open to Close</div>
         <div className = "intro">Add your ticker and the date using YYYY-MM-DD format to find your stock's data. The 
-          search will return the opening, closing, high, low, pre market, after hours, and price and percentage changes from the date
-          entered. Results are adjusted for splits. Price change is indicative of change of price from open to close and gapper
-          is percentage of change from open to close. </div>
+          search will return the opening, closing, high, low, pre market, after hours, and the open-close price change.
+          Morning gapper is available if market was open previous day from the date entered, otherwise, Nan is returned.
+          Results are adjusted for splits. Price change is indicative of change of price from open to close and gapper is
+          percentage of change from yesterday's close to the entered date open. </div>
         <div className = "inputsButton">
             <input
               type = "text"
